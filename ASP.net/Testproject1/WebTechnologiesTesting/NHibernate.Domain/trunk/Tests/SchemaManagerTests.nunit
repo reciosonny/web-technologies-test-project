@@ -1,0 +1,7 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" appbase="Mc.ORM.NHib.Util.Tests" binpathtype="Auto">
+    <assembly path="bin\Debug\Mc.ORM.NHib.Util.Tests.dll" />
+  </Config>
+  <Config name="Release" binpathtype="Auto" />
+</NUnitProject>

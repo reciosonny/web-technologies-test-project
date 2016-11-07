@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NorthwindEntityFrameworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="AccountType" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonId" Type="int" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lname" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" />
+        </EntityType>
+        <EntityType Name="Payroll">
+          <Key>
+            <PropertyRef Name="PayrollId" />
+          </Key>
+          <Property Name="PayrollId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="GrossPay" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SSS" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Philhealth" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Pagibig" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NetPay" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PayrollHistory">
+          <Key>
+            <PropertyRef Name="PayrollId" />
+          </Key>
+          <Property Name="PayrollId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="GrossPay" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SSS" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Philhealth" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Pagibig" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NetPay" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Account_Person">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payroll_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Payroll" Type="Self.Payroll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Payroll">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PayrollHistory_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="PayrollHistory" Type="Self.PayrollHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PayrollHistory">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NorthwindEntityFrameworkModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payroll" EntityType="Self.Payroll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayrollHistory" EntityType="Self.PayrollHistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_Person" Association="Self.FK_Account_Person">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payroll_Employee" Association="Self.FK_Payroll_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Payroll" EntitySet="Payroll" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PayrollHistory_Employee" Association="Self.FK_PayrollHistory_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="PayrollHistory" EntitySet="PayrollHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NorthwindEntityFrameworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NorthwindEntityFrameworkEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Accounts" EntityType="NorthwindEntityFrameworkModel.Account" />
+          <EntitySet Name="Departments" EntityType="NorthwindEntityFrameworkModel.Department" />
+          <EntitySet Name="Employees" EntityType="NorthwindEntityFrameworkModel.Employee" />
+          <EntitySet Name="Payrolls" EntityType="NorthwindEntityFrameworkModel.Payroll" />
+          <EntitySet Name="PayrollHistories" EntityType="NorthwindEntityFrameworkModel.PayrollHistory" />
+          <AssociationSet Name="FK_Account_Person" Association="NorthwindEntityFrameworkModel.FK_Account_Person">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="NorthwindEntityFrameworkModel.FK_Employee_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payroll_Employee" Association="NorthwindEntityFrameworkModel.FK_Payroll_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Payroll" EntitySet="Payrolls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PayrollHistory_Employee" Association="NorthwindEntityFrameworkModel.FK_PayrollHistory_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PayrollHistory" EntitySet="PayrollHistories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonId" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="NorthwindEntityFrameworkModel.FK_Account_Person" FromRole="Account" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="NorthwindEntityFrameworkModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="Accounts" Relationship="NorthwindEntityFrameworkModel.FK_Account_Person" FromRole="Employee" ToRole="Account" />
+          <NavigationProperty Name="Department" Relationship="NorthwindEntityFrameworkModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Payrolls" Relationship="NorthwindEntityFrameworkModel.FK_Payroll_Employee" FromRole="Employee" ToRole="Payroll" />
+          <NavigationProperty Name="PayrollHistories" Relationship="NorthwindEntityFrameworkModel.FK_PayrollHistory_Employee" FromRole="Employee" ToRole="PayrollHistory" />
+        </EntityType>
+        <EntityType Name="Payroll">
+          <Key>
+            <PropertyRef Name="PayrollId" />
+          </Key>
+          <Property Name="PayrollId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="GrossPay" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SSS" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Philhealth" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Pagibig" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NetPay" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Employee" Relationship="NorthwindEntityFrameworkModel.FK_Payroll_Employee" FromRole="Payroll" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="PayrollHistory">
+          <Key>
+            <PropertyRef Name="PayrollId" />
+          </Key>
+          <Property Name="PayrollId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="GrossPay" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SSS" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Philhealth" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Pagibig" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NetPay" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Employee" Relationship="NorthwindEntityFrameworkModel.FK_PayrollHistory_Employee" FromRole="PayrollHistory" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Account_Person">
+          <End Type="NorthwindEntityFrameworkModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="NorthwindEntityFrameworkModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Type="NorthwindEntityFrameworkModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="NorthwindEntityFrameworkModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payroll_Employee">
+          <End Type="NorthwindEntityFrameworkModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="NorthwindEntityFrameworkModel.Payroll" Role="Payroll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Payroll">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PayrollHistory_Employee">
+          <End Type="NorthwindEntityFrameworkModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="NorthwindEntityFrameworkModel.PayrollHistory" Role="PayrollHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PayrollHistory">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NorthwindEntityFrameworkModelStoreContainer" CdmEntityContainer="NorthwindEntityFrameworkEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="NorthwindEntityFrameworkModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="NorthwindEntityFrameworkModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="NorthwindEntityFrameworkModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Mname" ColumnName="Mname" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payrolls">
+            <EntityTypeMapping TypeName="NorthwindEntityFrameworkModel.Payroll">
+              <MappingFragment StoreEntitySet="Payroll">
+                <ScalarProperty Name="NetPay" ColumnName="NetPay" />
+                <ScalarProperty Name="Pagibig" ColumnName="Pagibig" />
+                <ScalarProperty Name="Philhealth" ColumnName="Philhealth" />
+                <ScalarProperty Name="SSS" ColumnName="SSS" />
+                <ScalarProperty Name="GrossPay" ColumnName="GrossPay" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="PayrollId" ColumnName="PayrollId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayrollHistories">
+            <EntityTypeMapping TypeName="NorthwindEntityFrameworkModel.PayrollHistory">
+              <MappingFragment StoreEntitySet="PayrollHistory">
+                <ScalarProperty Name="NetPay" ColumnName="NetPay" />
+                <ScalarProperty Name="Pagibig" ColumnName="Pagibig" />
+                <ScalarProperty Name="Philhealth" ColumnName="Philhealth" />
+                <ScalarProperty Name="SSS" ColumnName="SSS" />
+                <ScalarProperty Name="GrossPay" ColumnName="GrossPay" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="PayrollId" ColumnName="PayrollId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
