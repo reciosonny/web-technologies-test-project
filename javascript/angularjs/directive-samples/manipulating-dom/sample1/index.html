@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</head>
+<body ng-app="docsTimeDirective">
+<div ng-controller="Controller">
+  Date format: <input ng-model="format"> <hr/>
+  Current time is: <span my-current-time="format"></span>
+</div>
+</body>
+</html>
