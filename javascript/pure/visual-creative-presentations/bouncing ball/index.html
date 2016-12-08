@@ -9,7 +9,7 @@
 		#canvas {
 			position: relative;
 			background-color: #ccddcc;
-			/*margin: 1em auto;*/
+			margin: 1em auto;
 		}
 		.ball {
 			background-color: black;
@@ -20,34 +20,40 @@
 	</style>
 </head>
 <body>
-<!-- 	<h1>Bouncing Balls</h1>
+	<div style="height:100px;">
+		<h1>Bouncing Balls</h1>
 
-	<p>These bouncing balls are made with completely raw JavaScript,
-		just with divs. We don't use jQuery. We don't use canvas.</p>
-		<button id="btnAddBall">Add Balls</button>
- -->
+		<p>Click inside the ball area to add balls</p>
+	</div>
+
 		<div id="canvas"></div>
 
 		<script type="text/javascript">
 			var canvas = {
 				element: document.getElementById('canvas'),
-				width: window.innerWidth, //600,
-				height: window.innerHeight,//400,
+				width: 800, //600,
+				height: 600,//400,
 				initialize: function () {
 					this.element.style.width = this.width + 'px';
 					this.element.style.height = this.height + 'px';
+					console.log('canvas height: '+this.height);
+					console.log('canvas width: '+this.width);
+					
 					document.body.appendChild(this.element);
 				}
 			};
-			// var btnAddBall = document.getElementById('btnAddBall');
-			// btnAddBall.addEventListener('click', function () {
-			// 	Ball.create("green", 4, 3).draw(280,300);
-			// });
+
+			var colors = ["blue", "red", "green"];
 			canvas.element.addEventListener('click', function (e) {
-				var xCoordinate = e.x;
-				var yCoordinate = e.y;
-				Ball.create("green", 4, 3).draw(xCoordinate, yCoordinate);
+				var xCoordinate = e.x-(window.innerWidth - canvas.width)/2;
+				var yCoordinate = e.y-(window.innerHeight - canvas.height)/2;
+				var randomNumber = Math.floor(Math.random() * 3);
+				var selectedColor = colors[randomNumber];
+
+
+				Ball.create(selectedColor, 4, 3).draw(xCoordinate, yCoordinate);
 				console.log("x: "+xCoordinate);
+				console.log("actual x coordinate: "+e.x);
 				console.log("y: "+yCoordinate);
 				console.log("window width: "+window.innerWidth);
 			});	
@@ -90,7 +96,6 @@
 					}, 1000 / 60);
 				}
 			};
-
 			canvas.initialize();
 			var ball1 = Ball.create("blue", 4, 3);
 			var ball2 = Ball.create("red", 1, 5);

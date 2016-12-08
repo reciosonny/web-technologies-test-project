@@ -14,5 +14,5 @@
     <property name="Lname" />
     <property name="PersonInformationId" />
   </class>
-  
+
 </hibernate-mapping>

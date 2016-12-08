@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Array presentation</title>
+</head>
+<body>
+<div style="margin:0 auto; height: 50px;width:200px;">
+	<button id="btn" style="text-align: center;">Simulate array sorting</button>
+</div>
+
+<div style="height:200px;width:700px;margin: 0 auto;border:solid;">
+	<div id="divElemArr2" style="height: 50px;
+	width: 50px;
+	position: absolute;
+	display: inline-block;
+	border: solid #776AFF;
+	left: 70px;
+	top: 100px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 50px;">
+		2
+	</div>
+	<div id="divElemArr1" style="height: 50px;
+	width: 50px;
+	position: absolute;
+	display: inline-block;
+	border: solid #776AFF;
+	left: 140px;
+	top: 100px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 50px;">
+	1
+	</div>
+
+	<div style="height: 50px;
+	width: 50px;
+	position: relative;
+	display: inline-block;
+	border: solid;
+	left: 210px;
+	top: 100px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 50px;">
+	3
+	</div>
+
+	<div style="height: 50px;
+	width: 50px;
+	position: relative;
+	display: inline-block;
+	border: solid;
+	left: 280px;
+	top: 100px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 50px;">
+	4
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	
+	var arr = [1,2,3,4,5];
+	var leftPosition = 70;
+
+    document.getElementById('btn').addEventListener('click', function (e) {
+
+    	arr.forEach(function (i) {
+		    var node = document.createElement("LI");
+		    // var textnode = document.createTextNode("Water");
+		    var textnode = document.createTextNode(i);
+		    node.appendChild(textnode);
+
+		    document.body.appendChild(node);
+    		
+    	});
+    });
+
+    // var arrayElement = {
+    // 	create: function () {
+    		
+    // 	}
+    // }
+
+    var currElement = 1;
+    var elem1 = document.getElementById('divElemArr'+currElement);
+    var elem2 = document.getElementById('divElemArr2');
+
+    const _topPosition = 100;
+    var upPosition = 100;
+    var downPosition = 100;
+    var leftPosition2 = 140;
+	var leftPosition = 70;
+
+	function initialize() {	
+	    upPosition = 100;
+	    downPosition = 100;
+	}
+
+	//note: for improvisation
+    function swapPosition(leastElement, greaterElement) {
+    	upPosition -= 5;
+    	downPosition += 5;
+
+    	if (upPosition > 30) {	
+	    	leastElement.style.top = upPosition+"px";
+    	} else {
+
+    		if (leftPosition2 > 70) {
+    			leftPosition2 -= 5;
+		    	leastElement.style.left = leftPosition2+"px";
+    		} else {
+
+    			var styleTop = parseInt(leastElement.style.top.replace("px",""));
+    			if (_topPosition > styleTop) {
+    				styleTop += 5;
+		    		leastElement.style.top = styleTop+"px";
+    			}
+
+    		}
+
+    	}
+
+    	if (downPosition < 170) {
+	    	greaterElement.style.top = downPosition+"px";
+    	} else {
+    		var styleLeft = parseInt(greaterElement.style.left.replace("px",""));
+
+    		if (styleLeft < 140) {
+    			styleLeft += 5;
+		    	greaterElement.style.left = styleLeft+"px";
+    		} else {
+
+    			var styleTop = parseInt(greaterElement.style.top.replace("px",""));
+    			if (_topPosition < styleTop) {
+    				styleTop -= 5;
+		    		greaterElement.style.top = styleTop+"px";
+    			}
+
+    		}
+
+    	}
+    }
+
+    function animate() {
+    	swapPosition(elem1, elem2);
+
+    	// if (600 > leftPosition) { //sets boundary to the array
+	    // 	leftPosition+=5;
+	    // 	// elem1.style.left=leftPosition+"px";
+    	// }
+
+    }
+    var animationInterval = setInterval(animate, 20); //runs animation
+
+    // elem1.style.background="blue";
+    elem1.addEventListener('click', function (e) {
+    	alert('I am element 2');
+    });
+
+</script>
+</body>
+</html>

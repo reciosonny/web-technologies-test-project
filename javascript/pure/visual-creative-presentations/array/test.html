@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Array testing</title>
+	<script type="text/javascript" src="swapPosition.js"></script>
+</head>
+<body>
+	<div>
+		<h2>Selection sort array simulation</h2>
+	</div>
+	<div>
+		Array sample(separate it by comma(',')) <input type="text" name="">
+	</div>
+
+<script type="text/javascript">
+	var body = {
+		element: document.body
+	}
+
+	var elementUi = {
+		create: function (elementNumber, leftPosition) {
+			var newElement = Object.create(this);
+			newElement.element = document.createElement('div');
+			newElement.element.id = "arr"+elementNumber;
+			var elemStyle = newElement.element.style;
+    		var textnode = document.createTextNode(elementNumber);
+    		newElement.element.appendChild(textnode);
+
+			elemStyle.width = '50px';
+			elemStyle.height = '50px';
+			elemStyle.position = 'absolute';
+			elemStyle.display = 'inline-block';
+			elemStyle.border = 'solid black';
+			
+			elemStyle.left = leftPosition+'px'; //70px - initial value
+			elemStyle.top = '100px';
+			elemStyle.textAlign = 'center';
+			elemStyle.verticalAlign = 'middle';
+			elemStyle.lineHeight = '50px';
+
+			body.element.appendChild(newElement.element);
+
+
+			return newElement;
+		},
+		locateAndModifyStyleProperties: function (elementNumber, borderColor) {
+			var exElement = document.getElementById('arr'+elementNumber);
+			exElement.style.border = 'solid '+borderColor;
+		}
+	}
+
+	// elementUi.create();
+	
+	function myFunction(arr) {
+		console.log('function executed...');
+		console.log(arr);
+		clearInterval(animateInterval);
+	}
+
+	var counter = 0;
+	var arr = [5,6,7,8,2,9,4];
+	var i = 0;
+	var j = i+1;
+	var animateArraySwap = undefined;
+
+	var leftPosit = 70;
+	arr.forEach(function (i) {
+		elementUi.create(i, leftPosit);
+		leftPosit+=70;
+	});
+
+	function swapArray(leastElement, greaterElement) {
+		clearInterval(animateInterval);
+		return setInterval(function () {
+				console.log('transferring array...');
+				// animateInterval = animateSelectionSort();
+				var doneSwap = swapPosition(leastElement, greaterElement);
+				if (doneSwap) {
+					clearInterval(animateArraySwap);
+					animateInterval = animateSelectionSort();
+				}
+			}, 20);
+	}
+
+	var lastVal = 0;
+	var lastCurrVal = 0;
+	var currValue = 0;
+	var newValue = 0;
+	function moveIteration() {
+		
+		j++;
+		if (j > arr.length-1) {
+			j = i+1;
+			i += 1;
+		}
+	}
+	function finishIteration() {
+		if (i > arr.length-1) {
+			clearInterval(animateInterval);
+			console.log('sorting complete!');
+		}
+	}
+
+	function animateSelectionSort() {
+		return setInterval(function () {
+
+			currValue = arr[i];
+			console.log('current value: '+currValue);
+			console.log('last current value: '+lastCurrVal);
+			
+			newValue = arr[j];
+			console.log('new value: '+newValue);
+			console.log('last new value: '+lastVal);
+
+
+			elementUi.locateAndModifyStyleProperties(currValue, 'blue');
+			elementUi.locateAndModifyStyleProperties(newValue, 'blue');
+			if (lastCurrVal > 0 && lastCurrVal != newValue) {
+				elementUi.locateAndModifyStyleProperties(lastCurrVal, 'black');
+			}
+
+			if (currValue > newValue) {
+				//play new animation here for demonstrating array transfer and halt the current animation
+				var elemNewValue = document.getElementById('arr'+newValue);
+				var elemCurrValue = document.getElementById('arr'+currValue);
+
+				init = false;
+
+				arr[i] = newValue;
+				arr[j] = currValue;
+
+				/*for animation purposes...*/
+				lastCurrVal = currValue;
+				currValue = newValue;
+				/*END*/
+
+				// moveIteration();
+				// finishIteration();
+				
+				animateArraySwap = swapArray(elemNewValue, elemCurrValue);
+
+			}
+			if (lastVal > 0 && lastVal != currValue) {
+				elementUi.locateAndModifyStyleProperties(lastVal, 'black');
+			}
+			lastVal = newValue;
+
+			moveIteration();
+			finishIteration();
+
+			// if (i > arr.length-1) {
+			// 	clearInterval(animateInterval);
+			// 	console.log('sorting complete!');
+			// }
+
+			console.log('\n\n');
+
+		}, 1000);
+
+	}
+
+	var animateInterval = animateSelectionSort();
+
+</script>
+</body>
+</html>

@@ -20,27 +20,21 @@ namespace EntityFramework.Domain.UnitOfWork {
         public UnitOfWork() {
 
         }
-        
-        public IRepository<Employee> Employees
-        {
-            get
-            {
+
+        public IRepository<Employee> Employees {
+            get {
                 return new GenericRepository<Employee>(context);
             }
         }
 
-        public IRepository<Account> Accounts
-        {
-            get
-            {
+        public IRepository<Account> Accounts {
+            get {
                 return new GenericRepository<Account>(context);
             }
         }
 
-        public IPayrollRepository Payroll
-        {
-            get
-            {
+        public IPayrollRepository Payroll {
+            get {
                 return new PayrollRepository(context);
             }
         }
@@ -48,7 +42,7 @@ namespace EntityFramework.Domain.UnitOfWork {
         public void SaveChanges() {
             context.SaveChanges();
         }
-        
+
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing) {
